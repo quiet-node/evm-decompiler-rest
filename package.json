@@ -1,0 +1,12 @@
+{
+  "name": "evm-decompiler-rest",
+  "version": "0.1.0",
+  "description": "REST service to decompile EVM bytecode into Solidity contract",
+  "attribution": "This decompiler utilizes the Heimdall-rs, an MIT-licensed EVM bytecode tool, at https://github.com/Jon-Becker/heimdall-rs ",
+  "scripts": {
+    "dev": "ts-node server.ts"
+  },
+  "author": "quiet-node",
+  "license": "Apache-2.0",
+  }
+}
