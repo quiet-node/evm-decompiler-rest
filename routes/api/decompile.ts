@@ -28,8 +28,15 @@ decompilerRouter.post('/', (req, res) => {
         });
       }
 
-      // get decompiled contract from stdout
-      if (stdout.includes('// SPDX-License-Identifier')) {
+      // error returned by heimdall
+      if (stdout.includes('error')) {
+        console.error(stdout + `\nDone.`);
+        return res.status(400).json({
+          error: stdout,
+          decompiled: null,
+        });
+      } else if (stdout.includes('// SPDX-License-Identifier')) {
+        // get decompiled contract from stdout
         console.log('Extracting source code...');
         const decompiled = stdout.substring(
           stdout.indexOf('// SPDX-License-Identifier')
@@ -41,9 +48,8 @@ decompilerRouter.post('/', (req, res) => {
           error: null,
         });
       } else {
-        // error returned by heimdall
-        console.error(stdout);
-        return res.status(400).json({
+        console.log('Unknown error');
+        return res.status(500).json({
           error: stdout,
           decompiled: null,
         });
