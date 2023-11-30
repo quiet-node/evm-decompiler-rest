@@ -23,10 +23,16 @@ full-start-decompiler: remove_full build-decompiler run-decompiler
 push-decompiler: build-decompiler
 	docker push $(SERVER_IMAGE_TAG)
 
+remote-start:
+	docker pull $(SERVER_IMAGE_TAG)
+	docker run -d -p 7639:7639 $(SERVER_IMAGE_TAG)
+
 ### K8S ###
 
 deploy-k8s:
-	kubectl start -f ./k8s/deployment.yaml
+	kubectl create -f ./k8s/deployment.yaml
 
 service-k8s:
-	kubectl start -f ./k8s/service.yaml
+	kubectl create -f ./k8s/service.yaml
+
+k8s-start: deploy-k8s service-k8s
