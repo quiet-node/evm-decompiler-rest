@@ -11,7 +11,12 @@ decompilerRouter.post('/', (req, res) => {
 
   if (bytecode) {
     console.log('Decompiling...');
-    const DECOMPILE_COMMAND = `heimdall decompile --include-sol -d ${bytecode} --output print`;
+    const HEIMDALL_RS_CMD =
+      process.env.NODE_ENV === 'production'
+        ? `./heimdall-rs/heimdall`
+        : `heimdall`;
+
+    const DECOMPILE_COMMAND = `${HEIMDALL_RS_CMD} decompile --include-sol -d ${bytecode} --output print`;
     exec(DECOMPILE_COMMAND, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}\nDone.`);
