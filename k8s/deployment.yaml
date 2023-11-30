@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evm-decompiler-rest-depl
+spec:
+  selector:
+    matchLabels:
+      app: evm-decompiler-rest-depl
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: evm-decompiler-rest-depl
+    spec:
+      containers:
+        - name: evm-decompiler-rest-depl
+          image: logann131/evm-decompiler-rest:0.1.0
+          ports:
+            - containerPort: 7639

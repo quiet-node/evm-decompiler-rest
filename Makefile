@@ -1,6 +1,6 @@
 SERVER_IMAGE_TAG=logann131/evm-decompiler-rest:0.1.0
 
-
+### DOCKER ###
 containers_remove:
 	docker remove -f $$(docker ps -aq)
 
@@ -22,3 +22,11 @@ full-start-decompiler: remove_full build-decompiler run-decompiler
 
 push-decompiler: build-decompiler
 	docker push $(SERVER_IMAGE_TAG)
+
+### K8S ###
+
+deploy-k8s:
+	kubectl start -f ./k8s/deployment.yaml
+
+service-k8s:
+	kubectl start -f ./k8s/service.yaml
