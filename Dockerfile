@@ -21,7 +21,7 @@ RUN apt-get update \
 RUN curl -L http://get.heimdall.rs | bash
 
 # run bifrost to install heimdall
-RUN ./root/.bifrost/bin/bifrost -v main
+RUN ./root/.bifrost/bin/bifrost
 
 ### PRODUCTION ###
 FROM ubuntu:latest AS production
