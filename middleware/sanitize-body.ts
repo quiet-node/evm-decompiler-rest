@@ -33,35 +33,33 @@ export const sanitizeBytecodeMiddlware = (req: any, res: any, next: any) => {
 };
 
 export const checkValidHashKey = (req: any, res: any, next: any) => {
-  console.log('Checking unique hash key...');
-  const hashKey = req.body.hashkey;
+  console.log('Checking unique keyhash...');
+  const keyhash = req.body.keyhash;
 
-  if (!hashKey) {
-    console.log('No hash key found');
+  if (!keyhash) {
+    console.log('No keyhash found');
     return res
       .status(400)
-      .json({ error: 'No hash key found', decompiled: null });
+      .json({ error: 'No keyhash found', decompiled: null });
   }
 
-  // Perform hash key validation and sanitization here
+  // Perform keyhash validation and sanitization here
   const ESCAPE_CHARS = /[;`&$!|*?<>^()#"'\\\[\]\{\}]/g;
-  const sanitizedHashkey = hashKey.replace(ESCAPE_CHARS, '');
+  const sanitizedKeyHash = keyhash.replace(ESCAPE_CHARS, '');
 
   // Perfrom a sanity check if the hashkey has the correct form or not
-  const HASHKEY_REGEX = /^[0-9a-fA-F]{8}$/;
-  const properHashKey = HASHKEY_REGEX.test(sanitizedHashkey)
-    ? sanitizedHashkey
+  const HASHKEY_REGEX = /^[0-9a-fA-F]{18}$/; // e.g.: 6612bd461092b9f52d
+  const properHashKey = HASHKEY_REGEX.test(sanitizedKeyHash)
+    ? sanitizedKeyHash
     : null;
   if (properHashKey) {
-    console.log('Finished sanitizing. Hash key is valid!');
+    console.log('Finished sanitizing. keyhash is valid!');
   } else {
-    console.log('Finished sanitizing. Hash key is invalid!');
-    return res
-      .status(400)
-      .json({ error: 'Invalid hash key', decompiled: null });
+    console.log('Finished sanitizing. keyhash is invalid!');
+    return res.status(400).json({ error: 'Invalid keyhash', decompiled: null });
   }
 
-  // Perform a check to see if a request with the unique hash key is still in process => abort the request
+  // Perform a check to see if a request with the unique keyhash is still in process => abort the request
   if (fs.existsSync(`./${properHashKey}`)) {
     return res.status(400).json({
       error:

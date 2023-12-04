@@ -8,7 +8,7 @@ const decompilerRouter = express.Router();
 // @desc: attempts to decompile EVM bytecode into Soldiity smart contract
 // @access: public
 decompilerRouter.post('/', (req, res) => {
-  const hashkey = req.body.hashkey;
+  const keyhash = req.body.keyhash;
   const bytecode = req.body.bytecode;
 
   if (bytecode) {
@@ -18,7 +18,7 @@ decompilerRouter.post('/', (req, res) => {
         ? `./heimdall-rs/heimdall`
         : `heimdall`;
 
-    const DECOMPILE_COMMAND = `${HEIMDALL_RS_CMD} decompile --include-sol -d ${bytecode} --output ${hashkey}`;
+    const DECOMPILE_COMMAND = `${HEIMDALL_RS_CMD} decompile --include-sol -d ${bytecode} --output ${keyhash}`;
     exec(DECOMPILE_COMMAND, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}\nDone.`);
@@ -35,7 +35,7 @@ decompilerRouter.post('/', (req, res) => {
         });
       }
 
-      const DECOMPILED_OUTPUT_DIR = `./${hashkey}`;
+      const DECOMPILED_OUTPUT_DIR = `./${keyhash}`;
 
       // error returned by heimdall
       if (stdout.includes('error')) {
