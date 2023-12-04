@@ -20,8 +20,8 @@ RUN apt-get update \
 # get bifrost - heimdall's installation manager
 RUN curl -L http://get.heimdall.rs | bash
 
-# run bifrost to install heimdall
-RUN ./root/.bifrost/bin/bifrost
+# run bifrost to install heimdall -- lock at 0.6.5
+RUN ./root/.bifrost/bin/bifrost -v 0.6.5
 
 ### PRODUCTION ###
 FROM ubuntu:latest AS production
