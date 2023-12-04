@@ -10,4 +10,7 @@ spec:
     - protocol: TCP
       port: 7639
   # NodePort open this service for requests on each node in the cluster
-  type: NodePort
+  # type: NodePort
+
+  # Google Cloud load balancer
+  type: LoadBalancer
