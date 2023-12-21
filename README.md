@@ -1,5 +1,5 @@
-# evm-decompiler-rest (WIP)
-REST service to decompile EVM bytecode into Solidity contract
+# EVM Bytecode Decompiler
+A REST service tailored to efficiently decompile Ethereum Virtual Machine (EVM) bytecode into readable Solidity contracts. 
 
 ## Get started
 
